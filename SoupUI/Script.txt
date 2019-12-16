@@ -1,0 +1,3 @@
+log.info testRunner.testCase.testSuite.testCases["addEmployee TestCase"].setPropertyValue("ID","300360")
+log.info testRunner.testCase.testSuite.testCases["addEmployee TestCase"].setPropertyValue("Name","Akshay Chavan")
+log.info testRunner.testCase.testSuite.project.getPropertyValue("ID")

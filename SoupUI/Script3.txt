@@ -1,0 +1,20 @@
+import com.eviware.soapui.support.XmlHolder
+import com.eviware.soapui.impl.wsdl.testcase.WsdlTestRunContext
+def vName=testRunner.testCase.testSuite.testCases["addEmployee TestCase"].getPropertyValue("name")
+def vRequest=testRunner.testCase.testSuite.testCases["getEmployeeDetails TestCase"].testSteps["getEmployeeDetails"].getPropertyValue("Request")
+def vXMLHolder=new XmlHolder(vRequest)
+
+vXMLHolder.setNodeValue("//typ:employeeName",vName)
+def vExec=vXMLHolder.getXml()
+
+testRunner.testCase.testSuite.testCases["getEmployeeDetails TestCase"].testSteps["getEmployeeDetails"].setPropertyValue("Request",vExec)
+
+def vReqExec=testRunner.testCase.testSuite.testCases["getEmployeeDetails TestCase"].testSteps["getEmployeeDetails"]
+def vContext=new WsdlTestRunContext(vReqExec)
+vReqExec.run(testRunner,vContext)
+
+def vResponce=testRunner.testCase.testSuite.testCases["getEmployeeDetails TestCase"].testSteps["getEmployeeDetails"].getPropertyValue("Response")
+def vGetRes=new XmlHolder(vResponce)
+def vNameRes=vGetRes.getNodeValue("//ns:name")
+
+assert vNameRes==vName
